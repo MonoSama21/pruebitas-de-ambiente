@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto con CI/CD - Vercel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
+        .badge.production {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge.development {
+            background: #f59e0b;
+            color: white;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #f3f4f6;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 5px;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li {
+            padding: 5px 0;
+            color: #555;
+        }
+
+        .info-box li:before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .environment-info {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .environment-info strong {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Proyecto HTML con CI/CD</h1>
+        
+        <div class="environment-info">
+            <p><strong>Ambiente:</strong> <span id="environment">Producción</span></p>
+            <p><strong>Rama:</strong> <span id="branch">main</span></p>
+        </div>
+
+        <div class="badge production" id="badge">
+            PRODUCCIÓN
+        </div>
+
+        <p>Este es un proyecto HTML básico configurado con despliegue automático en Vercel.</p>
+
+        <div class="info-box">
+            <h3>📋 Configuración de Ambientes:</h3>
+            <ul>
+                <li><strong>Rama main</strong> → Ambiente de Producción</li>
+                <li><strong>Rama develop</strong> → Ambiente de Desarrollo</li>
+                <li>Despliegue automático en cada push</li>
+                <li>URLs únicas para cada ambiente</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>🔧 Características:</h3>
+            <ul>
+                <li>CI/CD automático con Vercel</li>
+                <li>Despliegues por rama</li>
+                <li>Preview de cada commit</li>
+                <li>Rollback instantáneo</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Desplegado con ❤️ usando Vercel</p>
+            <p>© 2026 - Proyecto de Prueba</p>
+        </footer>
+    </div>
+
+    <script>
+        // Detectar ambiente basado en el hostname
+        const hostname = window.location.hostname;
+        const environmentSpan = document.getElementById('environment');
+        const branchSpan = document.getElementById('branch');
+        const badge = document.getElementById('badge');
+
+        // Vercel crea diferentes URLs para diferentes ambientes
+        if (hostname.includes('vercel.app')) {
+            // Si contiene el nombre del proyecto seguido de -git-develop
+            if (hostname.includes('-git-develop')) {
+                environmentSpan.textContent = 'Desarrollo';
+                branchSpan.textContent = 'develop';
+                badge.textContent = 'DESARROLLO';
+                badge.classList.remove('production');
+                badge.classList.add('development');
+            }
+        } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            environmentSpan.textContent = 'Local';
+            branchSpan.textContent = 'local';
+            badge.textContent = 'LOCAL';
+            badge.classList.remove('production');
+            badge.classList.add('development');
+        }
+    </script>
+</body>
+</html>
